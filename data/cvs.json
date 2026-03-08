@@ -1,0 +1,151 @@
+
+[
+    {
+    "id": "3b6c20b9-3a76-4a61-bb2c-9fca615c4854",
+    "identite": {
+        "nom": "John Done",
+        "age": 25,
+        "adresse": {
+            "rue": "Mendong",
+            "ville": "Yaoundé"
+        },
+        "titre": "Développeur Python",
+        "telephone": "+237 691 00 00 00",
+        "email": "john@gmail.com",
+        "profil": "Je suis John Ingénieur....."
+    },
+    "experience": [
+        {
+            "poste": "Développeur Web",
+            "entreprise": "PMUC",
+            "debut": "2022-01",
+            "fin": "2026-07",
+            "points_cles": [
+                "Développement API REST",
+                "Optimisation de la base de données"
+            ]
+        }
+    ],
+    "competence":[
+        "Javascript",
+        "Python",
+        "React",
+        "SQL"
+    ],
+    "education": [
+        {
+            "diplome": "Master Data Science",
+            "institution": "École Supérieure des Postes et Télécoms",
+            "annee": "2017"
+        }
+    ],
+    "langue": [
+        "FR",
+        "EN"
+    ],
+    "loisir": [
+        "Photographie",
+        "Musique",
+        "Sport",
+        "Lecture"
+    ]
+},
+{
+    "id": "dceb078e-31e1-42f4-ba86-1b54ca6adb2e",
+    "identite": {
+        "nom": "Madéleine Done",
+        "age": 30,
+        "adresse": {
+            "rue": "TAM TAM",
+            "ville": "Yaoundé"
+        },
+        "titre": "Administrateur",
+        "telephone": "+237 694 00 00 00",
+        "email": "madeleine@gmail.com",
+        "profil": "Je suis Madéleine Administrateur....."
+    },
+    "experience": [
+        {
+            "poste": "RH",
+            "entreprise": "PMUC",
+            "debut": "2021-01",
+            "fin": "Présent",
+            "points_cles": [
+                "Gestion du personnel",
+                "Planning journalier du personnel"
+            ]
+        }
+    ],
+    "competence":[
+        "Gestion",
+        "Rédaction",
+        "Meeting",
+        "Collaboration excellente"
+    ],
+    "education": [
+        {
+            "diplome": "Master Administration et Gestion",
+            "institution": "ENAM",
+            "annee": "2017"
+        }
+    ],
+    "langue": [
+        "FR",
+        "EN"
+    ],
+    "loisir": [
+        "Musique",
+        "Lecture"
+    ]
+},
+{
+    "id": "2962a047-6963-491f-a463-23cb06cdc206",
+    "identite": {
+        "nom": "Alex Done",
+        "age": 25,
+        "adresse": {
+            "rue": "Akwa",
+            "ville": "Douala"
+        },
+        "titre": "Développeur logiciel",
+        "telephone": "+237 696 00 00 00",
+        "email": "alex@gmail.com",
+        "profil": "Je suis Alex Ingénieur....."
+    },
+    "experience": [
+        {
+            "poste": "Développeur Web",
+            "entreprise": "SCH",
+            "debut": "2022-01",
+            "fin": "2025-07",
+            "points_cles": [
+                "Développement API REST",
+                "Optimisation de la base de données"
+            ]
+        }
+    ],
+    "competence":[
+        "Javascript",
+        "Python",
+        "React",
+        "SQL"
+    ],
+    "education": [
+        {
+            "diplome": "Master Logiciel Informatique",
+            "institution": "École Supérieure des Postes et Télécoms",
+            "annee": "2017"
+        }
+    ],
+    "langue": [
+        "FR",
+        "EN"
+    ],
+    "loisir": [
+        "Musique",
+        "Sport",
+        "Lecture"
+    ]
+}
+
+]
