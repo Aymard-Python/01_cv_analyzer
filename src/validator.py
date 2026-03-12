@@ -1,3 +1,4 @@
+import time
 
 required_fields = ['id', 'identite', 'experience', 'competence', 'education', 'langue', 'loisir']
 required_experience = ['poste', 'entreprise', 'debut', 'fin', 'points_cles']
@@ -9,7 +10,7 @@ required_language = ['FR', 'EN']
 required_hobbies = ['Photographie', 'Musique', 'Sport', 'Lecture']
 
 def validate_schema(cv_list):
-    """Valide la structure et les types des CVs."""
+    """Valide la structure et les types de données dans chaque CV."""
     ## Validation du type de chaque clé dans chaque CV.
     if not isinstance(cv_list, list):
         raise ValueError("Le format de ce CV n'est pas correct.")
@@ -60,7 +61,7 @@ def validate_schema(cv_list):
     return cv_list
 
 def validate_content(cv_list):
-    
+    """Valide le contenu de chaque grande ligne du fichier Json."""
     for item in cv_list:
         EXPERIENCE = item['experience']
         EDUCATION = item['education']
@@ -93,6 +94,49 @@ def validate_content(cv_list):
         # Validation des données de la clé loisir dans les CVs
         validate_string_list(LOISIR, required_hobbies, 'loisir', item['id'])
                 
+    return cv_list 
+
+def validate_date(cv_list):
+    """Valide le format date du fichier Json."""
+    for item in cv_list:
+        identity = item['identite']
+        experience = item['experience']
+        education = item['education']
+
+        for line in education:
+            check_required_fields(line, required_education, context="education")
+            year_str = line['annee']
+            try:
+                year = time.strptime(year_str, "%Y")
+            except ValueError:
+                raise ValueError(
+                        f"Erreur CV de {identity['nom']}: Mauvais format de l'année {year_str}."
+                        f"Format attendu: YYYY"   
+                    )
+                
+        for row in experience:
+            check_required_fields(row, required_experience, context="experience")
+            date_debut_str = row['debut']
+            date_fin_str = row['fin']
+            
+            if date_fin_str == "Présent":
+                raise ValueError(f"Erreur CV de {identity['nom']}: {date_fin_str} est une valeur date invalide.")
+
+            try:
+                date_debut = time.strptime(date_debut_str, "%Y-%m")
+                date_fin = time.strptime(date_fin_str, "%Y-%m")
+            except ValueError:
+                raise ValueError(
+                    f"Erreur CV de {identity['nom']}: Mauvais format de date "
+                    f"(début: {date_debut_str}, fin: {date_fin_str}). Format attendu: YYYY-MM."
+                )
+
+            if date_debut > date_fin:
+                raise ValueError(
+                    f"Erreur dans le CV de {identity['nom']}: La date de début" 
+                    f"{date_debut_str} ne doit pas être supérieur à la date de fin {date_fin_str}."
+                )
+    
     return cv_list
 
 def check_required_fields(data, required_keys, context=""):
