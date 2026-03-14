@@ -1,0 +1,38 @@
+=========== CV ANALYSIS REPORT ===========
+
+Total CV analysés : 3
+Années d'expériences moyenne : 4.39 ans
+Moyenne de compétences: 4.0
+Moyenne d'expériences: 1.0
+================================================
+
+Top compétences :
+Javascript: 2
+Python: 2
+React: 2
+SQL: 2
+================================================
+
+Top postes :
+Développeur Web: 2
+================================================
+
+Top loisirs :
+Musique: 3
+Lecture: 3
+================================================
+
+Entreprises :
+PMUC: 2
+SCH: 1
+================================================
+
+Niveau d'études :
+Master Data Science: 1
+Master Administration et Gestion: 1
+Master Logiciel Informatique: 1
+================================================
+
+Villes :
+Yaoundé: 2
+Douala: 1

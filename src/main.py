@@ -1,33 +1,22 @@
 from loader import reader_cv_json
 from validator import validate_schema, validate_content, check_required_fields, validate_string_list, validate_date
-from analyzer import generate_id
 from extractor import extract
+from report import generate_report
 
-required_experience = ['poste', 'entreprise', 'debut', 'fin', 'points_cles']
-required_competence = ['Javascript', 'Python', 'React', 'SQL', 'Gestion', 'Rédaction', 
-                       'Meeting', 'Collaboration excellente']
 
-file_name = "../data/cvs.json"
-
-def main(file_name):
+def main():
     
-    data = reader_cv_json(file_name)
+    data = reader_cv_json("../data/cvs.json")
 
     validate_schema(data)
     validate_content(data)
     validate_date(data)
 
-    for item in data:
-        experience = item['experience']
-        competence = item['competence']
-        for exp in experience:
-            check_required_fields(exp, required_experience, context="experience")
-        
-        validate_string_list(competence, required_competence, 'competence', 'id')
+    stats = extract(data)
 
-    report = extract(data)
+    report = generate_report(stats, data)
+
     print(report)
 
-
 if __name__ == "__main__":
-    main(file_name)
+    main()

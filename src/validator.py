@@ -1,16 +1,17 @@
 import time
 
-required_fields = ['id', 'identite', 'experience', 'competence', 'education', 'langue', 'loisir']
-required_experience = ['poste', 'entreprise', 'debut', 'fin', 'points_cles']
-required_education = ['diplome', 'institution', 'annee']
-required_identity = ['age', 'adresse', 'titre', 'telephone', 'email', 'profil']
-required_competence = ['Javascript', 'Python', 'React', 'SQL', 'Gestion', 'Rédaction', 
-                       'Meeting', 'Collaboration excellente']
-required_language = ['FR', 'EN']
-required_hobbies = ['Photographie', 'Musique', 'Sport', 'Lecture']
+required = {
+    '_fields': ['id', 'identite', 'experience', 'competence', 'education', 'langue', 'loisir'],
+    '_experience': ['poste', 'entreprise', 'debut', 'fin', 'points_cles'],
+    '_education': ['diplome', 'institution', 'annee'],
+    '_identity': ['nom', 'age', 'adresse', 'titre', 'telephone', 'email', 'profil'],
+    '_competence': ['Javascript', 'Python', 'React', 'SQL', 'Gestion', 'Rédaction', 'Meeting', 'Collaboration excellente'],
+    '_language': ['FR', 'EN'],
+    '_hobbies': ['Photographie', 'Musique', 'Sport', 'Lecture']
+}
 
 def validate_schema(cv_list):
-    """Valide la structure et les types de données dans chaque CV."""
+    """Valide la structure et les types des CVs."""
     ## Validation du type de chaque clé dans chaque CV.
     if not isinstance(cv_list, list):
         raise ValueError("Le format de ce CV n'est pas correct.")
@@ -22,7 +23,7 @@ def validate_schema(cv_list):
             raise ValueError("La clé id est inexistant d'où l'erreur de validation.")
             
      # Validation des données globales des CVs 
-        check_required_fields(item, required_fields, context=f"du CV {item['id']}")
+        check_required_fields(item, required['_fields'], context=f"du CV {item['id']}")
     
         Identity = item['identite']
         
@@ -61,7 +62,7 @@ def validate_schema(cv_list):
     return cv_list
 
 def validate_content(cv_list):
-    """Valide le contenu de chaque grande ligne du fichier Json."""
+    
     for item in cv_list:
         EXPERIENCE = item['experience']
         EDUCATION = item['education']
@@ -72,39 +73,38 @@ def validate_content(cv_list):
 
         # Validation des données de la clé education dans les CVs
         for education in EDUCATION:
-            check_required_fields(education, required_education, context=f"education du CV {item['id']}")
+            check_required_fields(education, required['_education'], context=f"education du CV {item['id']}")
 
          # Validation des données de la clé experience dans les CVs
         for experience in EXPERIENCE:
-            check_required_fields(experience, required_experience, context=f"experience du CV {item['id']}")
+            check_required_fields(experience, required['_experience'], context=f"experience du CV {item['id']}")
 
          # Validation des données de la clé identite dans les CVs
-        check_required_fields(IDENTITY, required_identity, context=f"identite du CV {item['id']}")
+        check_required_fields(IDENTITY, required['_identity'], context=f"identite du CV {item['id']}")
         
          # Valide la longueur de la chaîne de caractère nom dans la clé identite les CVs
         if len(IDENTITY['nom']) < 2:
             raise ValueError(f"Erreur dans le CV avec id = {item['id']}: l'élément nom de la clé identite est très court.")
             
         # Validation des données de la clé competence dans les CVs
-        validate_string_list(COMPETENCE, required_competence, 'competence', item['id'])
+        validate_string_list(COMPETENCE, required['_competence'], 'competence', item['id'])
 
         # Validation des données de la clé langue dans les CVs
-        validate_string_list(LANGUE, required_language, 'langue', item['id'])
+        validate_string_list(LANGUE, required['_language'], 'langue', item['id'])
 
         # Validation des données de la clé loisir dans les CVs
-        validate_string_list(LOISIR, required_hobbies, 'loisir', item['id'])
+        validate_string_list(LOISIR, required['_hobbies'], 'loisir', item['id'])
                 
     return cv_list 
 
 def validate_date(cv_list):
-    """Valide le format date du fichier Json."""
     for item in cv_list:
         identity = item['identite']
         experience = item['experience']
         education = item['education']
 
         for line in education:
-            check_required_fields(line, required_education, context="education")
+            check_required_fields(line, required['_education'], context="education")
             year_str = line['annee']
             try:
                 year = time.strptime(year_str, "%Y")
@@ -115,12 +115,9 @@ def validate_date(cv_list):
                     )
                 
         for row in experience:
-            check_required_fields(row, required_experience, context="experience")
+            check_required_fields(row, required['_experience'], context="experience")
             date_debut_str = row['debut']
             date_fin_str = row['fin']
-            
-            if date_fin_str == "Présent":
-                raise ValueError(f"Erreur CV de {identity['nom']}: {date_fin_str} est une valeur date invalide.")
 
             try:
                 date_debut = time.strptime(date_debut_str, "%Y-%m")

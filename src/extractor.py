@@ -5,9 +5,7 @@ from validator import validate_schema, validate_content
 
 def extract_info_list(key, extract_list):
     """Permet l'extraction des données listes dans CVs json."""
-    if key not in extract_list:
-        extract_list[key] = 0
-    extract_list[key] += 1
+    extract_list[key] = extract_list.get(key, 0) + 1
 
 def extract_info_dict(key, listes, extract):
     """Permet l'extraction des données listes dictionnaires dans CVs json."""
@@ -17,7 +15,7 @@ def extract_info_dict(key, listes, extract):
     extract[liste_dict] += 1
 
 def extract_dict(key, element, dict_elt, extract):
-    list_dict = dict_elt[key][element]
+    list_dict = dict_elt.get(key, {}).get(element)
     if list_dict not in extract:
         extract[list_dict] = 0
     extract[list_dict] += 1
@@ -28,7 +26,8 @@ def durees_experience(key_debut, key_fin, row, extract):
     date_debut = datetime.strptime(date_str_debut, "%Y-%m")
     date_fin = datetime.strptime(date_str_fin, "%Y-%m")
     diff = relativedelta(date_fin, date_debut)
-    extract.append(diff.years)
+    duree = diff.years + (diff.months/12)
+    extract.append(duree)
     return extract
 
 def new_cv_list(cv_list):
@@ -51,10 +50,6 @@ def extract(cv_list):
         'date_fin': {},
         'duree_experiences': []
     }
-
-    validate_schema(cv_list)
-    validate_content(cv_list)
-    new_cv_list(cv_list)
     
     for item in cv_list:
         EXPERIENCE = item['experience']
@@ -84,7 +79,4 @@ def extract(cv_list):
         identity = item['identite']
         extract_dict('adresse', 'ville', identity, stats['villes'])
         
-    return (
-        f"----------Rapport Extraction des données-------"
-        f"\n{stats}"
-        )
+    return stats
